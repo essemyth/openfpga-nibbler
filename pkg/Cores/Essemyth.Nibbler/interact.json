@@ -1,0 +1,98 @@
+{
+    "interact": {
+        "magic": "APF_VER_1",
+        "variables": [
+            {
+                "name": "Reset Game",
+                "id": 20,
+                "type": "action",
+                "enabled": true,
+                "address": "0x50000030",
+                "value": 1
+            },
+            {
+                "name": "Lives",
+                "id": 10,
+                "type": "list",
+                "enabled": true,
+                "persist": true,
+                "writeonly": true,
+                "address": "0x50000010",
+                "defaultval": 0,
+                "options": [
+                    { "value": 0, "name": "3" },
+                    { "value": 1, "name": "4" },
+                    { "value": 2, "name": "5" },
+                    { "value": 3, "name": "6" }
+                ]
+            },
+            {
+                "name": "Difficulty",
+                "id": 11,
+                "type": "list",
+                "enabled": true,
+                "persist": true,
+                "writeonly": true,
+                "address": "0x50000014",
+                "defaultval": 0,
+                "options": [
+                    { "value": 0, "name": "Easy" },
+                    { "value": 1, "name": "Hard" }
+                ]
+            },
+            {
+                "name": "Coinage",
+                "id": 12,
+                "type": "list",
+                "enabled": true,
+                "persist": true,
+                "writeonly": true,
+                "address": "0x50000020",
+                "defaultval": 0,
+                "options": [
+                    { "value": 0, "name": "1 Coin 1 Credit" },
+                    { "value": 1, "name": "2 Coins 1 Credit" },
+                    { "value": 2, "name": "1C 1Cr, 2C 3Cr" },
+                    { "value": 3, "name": "2C 1Cr, 4C 3Cr" }
+                ]
+            },
+            {
+                "name": "Free Play",
+                "id": 13,
+                "type": "check",
+                "enabled": true,
+                "persist": true,
+                "writeonly": true,
+                "address": "0x5000001C",
+                "defaultval": 0,
+                "value": 1,
+                "value_off": 0
+            },
+            {
+                "name": "Service Mode",
+                "id": 14,
+                "type": "check",
+                "enabled": true,
+                "persist": true,
+                "writeonly": true,
+                "address": "0x50000018",
+                "defaultval": 0,
+                "value": 1,
+                "value_off": 0
+            },
+            {
+                "name": "Debug Overlay",
+                "id": 1,
+                "type": "check",
+                "enabled": true,
+                "persist": true,
+                "writeonly": true,
+                "address": "0x50000000",
+                "defaultval": 0,
+                "value": 1,
+                "value_off": 0
+            }
+        ],
+        "messages": []
+    }
+}

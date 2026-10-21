@@ -1,0 +1,28 @@
+{
+    "data": {
+        "magic": "APF_VER_1",
+        "data_slots": [
+            {
+                "name": "Nibbler ROM",
+                "id": 1,
+                "required": true,
+                "parameters": "0x309",
+                "filename": "nibbler.rom",
+                "extensions": ["rom"],
+                "size_exact": "0x10000",
+                "address": "0x00000000"
+            },
+            {
+                "name": "High Scores",
+                "id": 2,
+                "required": false,
+                "nonvolatile": true,
+                "parameters": "0x20",
+                "filename": "nibbler.hi",
+                "extensions": ["hi"],
+                "size_maximum": "0x100",
+                "address": "0x60000000"
+            }
+        ]
+    }
+}
