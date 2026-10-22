@@ -26,34 +26,48 @@ and analog sound circuits.
 
 ## Installation
 
-1. Download the latest release zip and extract it to the root of your Pocket's
-   SD card. It adds `Cores/Essemyth.Nibbler/` and the files in `Platforms/`.
-2. Make the ROM file (below) and copy it to `/Assets/nibbler/common/` on the SD card.
+From the [latest release](https://github.com/essemyth/openfpga-nibbler/releases/latest)
+download both files:
+
+- `Essemyth.Nibbler_<version>_<date>.zip`: the core
+- `build_rom.ps1`: the script that makes the ROM file
+
+Then:
+
+1. Extract the zip to the root of your Pocket's SD card. It adds
+   `Cores/Essemyth.Nibbler/` and the files in `Platforms/`.
+2. Make `nibbler.rom` (below) and copy it to `/Assets/nibbler/common/` on the
+   SD card. Create those folders if they don't exist.
 3. On the Pocket: **openFPGA > Arcade > Nibbler**.
 
 ### Making the ROM file
 
 The core needs a single file, `nibbler.rom`, combined from a MAME Nibbler ROM set
 that you supply (no ROM data is included in this project). MAME sets come as
-separate chip files (`g-0960-52.ic12`, `ic7`, ...) in a folder or zip; the
-script below finds each chip by its checksum and assembles them, so file names
-don't matter.
+separate chip files (`g-0960-52.ic12`, `ic7`, ...) in a folder or zip;
+`build_rom.ps1` finds each chip by its checksum and assembles them, so file
+names don't matter.
 
-From a copy of this repository, in PowerShell (built into Windows; on macOS or
-Linux use PowerShell 7):
+On Windows, open PowerShell in the folder where you saved `build_rom.ps1` and
+run:
 
 ```powershell
 # rev 9 (MAME "nibbler"), the default
-.\tools\build_rom.ps1 -Source <path to the nibbler folder or nibbler.zip>
+powershell -ExecutionPolicy Bypass -File .\build_rom.ps1 -Source <path to the nibbler folder or nibbler.zip>
 
 # rev 6 (MAME "nibbler6"), optional. A split set keeps the chips rev 6 shares
 # with rev 9 in the parent, so give both:
-.\tools\build_rom.ps1 -Source <nibbler6 set>,<nibbler set> -Set nibbler6
+powershell -ExecutionPolicy Bypass -File .\build_rom.ps1 -Source <nibbler6 set>,<nibbler set> -Set nibbler6
 ```
 
-Sources can be folders or zips, and you can list several. The files are written
-to `pkg/Assets/nibbler/common/` (`nibbler.rom`, `nibbler6.rom`). If chips are
-missing, the script stops and lists their checksums.
+`-ExecutionPolicy Bypass` lets this one script run: Windows blocks scripts
+downloaded from the internet by default. On macOS or Linux, install PowerShell 7
+and run `pwsh ./build_rom.ps1 -Source ...` instead.
+
+The script writes `nibbler.rom` (or `nibbler6.rom`) into the current folder.
+Sources can be folders or zips, and you can list several. If chips are missing,
+the script stops and lists their checksums. (From a clone of this repository,
+`.\tools\build_rom.ps1` writes to `pkg/Assets/nibbler/common/` instead.)
 
 To play rev 6, choose `nibbler6.rom` from the core's menu on the Pocket
 (**Nibbler ROM**). The choice is remembered.

@@ -12,9 +12,14 @@
         0xC000-0xC03F  Color PROMs (fg ic7 @ 0xC000, bg ic6 @ 0xC020)
         0xC040-0xFFFF  Padding (0x00)
 
-    By default the output goes to pkg\Assets\nibbler\common\, as nibbler.rom for
-    rev 9 (the core's default) or nibbler6.rom for rev 6 (choose it in the
-    core's menu on the Pocket).
+    The output is nibbler.rom for rev 9 (the core's default) or nibbler6.rom for
+    rev 6 (choose it in the core's menu on the Pocket). It is written to
+    pkg\Assets\nibbler\common\ when run from the repository, otherwise to the
+    current folder. Copy it to /Assets/nibbler/common/ on the Pocket's SD card.
+
+    A copy downloaded from the release page is blocked by Windows' default
+    script policy; run it with:
+        powershell -ExecutionPolicy Bypass -File .\build_rom.ps1 -Source <set>
 
 .EXAMPLE
     .\tools\build_rom.ps1 -Source C:\roms\nibbler                 # rev 9 -> nibbler.rom
@@ -33,7 +38,12 @@ $ErrorActionPreference = 'Stop'
 
 if (-not $Out) {
     $name = if ($Set -eq 'nibbler6') { 'nibbler6.rom' } else { 'nibbler.rom' }
-    $Out = Join-Path $PSScriptRoot "..\pkg\Assets\nibbler\common\$name"
+    $repoAssets = Join-Path $PSScriptRoot '..\pkg\Assets\nibbler\common'
+    $Out = if (Test-Path (Join-Path $PSScriptRoot '..\pkg\Cores')) {
+        Join-Path $repoAssets $name                     # inside the repository
+    } else {
+        Join-Path (Get-Location).Path $name             # standalone copy
+    }
 }
 
 Add-Type -TypeDefinition @'
