@@ -38,11 +38,14 @@ $ErrorActionPreference = 'Stop'
 
 if (-not $Out) {
     $name = if ($Set -eq 'nibbler6') { 'nibbler6.rom' } else { 'nibbler.rom' }
-    $repoAssets = Join-Path $PSScriptRoot '..\pkg\Assets\nibbler\common'
-    $Out = if (Test-Path (Join-Path $PSScriptRoot '..\pkg\Cores')) {
-        Join-Path $repoAssets $name                     # inside the repository
+    # the repository's own tools\build_rom.ps1 writes into pkg\; any other copy
+    # (e.g. downloaded from the release page) writes to the current folder
+    $inRepo = (Split-Path $PSScriptRoot -Leaf) -eq 'tools' -and
+              (Test-Path (Join-Path $PSScriptRoot '..\pkg\Cores\Essemyth.Nibbler\core.json'))
+    $Out = if ($inRepo) {
+        Join-Path $PSScriptRoot "..\pkg\Assets\nibbler\common\$name"
     } else {
-        Join-Path (Get-Location).Path $name             # standalone copy
+        Join-Path (Get-Location).Path $name
     }
 }
 
