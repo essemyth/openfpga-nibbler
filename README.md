@@ -35,9 +35,10 @@ download both files:
 Then:
 
 1. Extract the zip to the root of your Pocket's SD card. It adds
-   `Cores/Essemyth.Nibbler/` and the files in `Platforms/`.
+   `Cores/Essemyth.Nibbler/`, the files in `Platforms/`, and the ROM folder
+   `Assets/nibbler/common/`.
 2. Make `nibbler.rom` (below) and copy it to `/Assets/nibbler/common/` on the
-   SD card. Create those folders if they don't exist.
+   SD card.
 3. On the Pocket: **openFPGA > Arcade > Nibbler**.
 
 ### Making the ROM file

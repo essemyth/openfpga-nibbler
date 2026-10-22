@@ -7,6 +7,7 @@
         Cores/Essemyth.Nibbler/    core definition JSONs, icon.bin, bitstream.rbf_r
         Platforms/nibbler.json
         Platforms/_images/nibbler.bin
+        Assets/nibbler/common/Put nibbler.rom here.txt
     No ROM data is included: users build nibbler.rom from their own MAME set.
     The zip is named Essemyth.Nibbler_<version>_<date>.zip from core.json and is
     written to release/.
@@ -32,6 +33,16 @@ Get-ChildItem $coreDir -File | Where-Object { $_.Name -ne '.gitkeep' } |
     Copy-Item -Destination (Join-Path $stage 'Cores\Essemyth.Nibbler')
 Copy-Item (Join-Path $root 'pkg\Platforms\nibbler.json') (Join-Path $stage 'Platforms')
 Copy-Item (Join-Path $root 'pkg\Platforms\_images\nibbler.bin') (Join-Path $stage 'Platforms\_images')
+
+# the folder the ROM goes in, with a note (a file, so every unzip tool creates
+# the folder; the Pocket's ROM browser only lists .rom files)
+$assets = Join-Path $stage 'Assets\nibbler\common'
+New-Item -ItemType Directory -Force $assets | Out-Null
+Set-Content (Join-Path $assets 'Put nibbler.rom here.txt') -Encoding ascii -Value @(
+    'Put nibbler.rom (and nibbler6.rom for rev 6) in this folder.',
+    'Make it from your own MAME Nibbler ROM set with build_rom.ps1 from the release page:',
+    'https://github.com/essemyth/openfpga-nibbler/releases/latest'
+)
 
 # safety: never ship ROM data
 $bad = Get-ChildItem $stage -Recurse -File | Where-Object { $_.Extension -in '.rom', '.zip', '.hi', '.sta' }
